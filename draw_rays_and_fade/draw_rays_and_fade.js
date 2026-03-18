@@ -1,4 +1,4 @@
-function setup() {
+function setup() { //andy made this
   createCanvas(windowWidth, windowHeight)
   background(255,255,0);                //start with a yellow background
 }
