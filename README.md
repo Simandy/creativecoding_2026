@@ -1,2 +1,3 @@
 # creativecoding_2026
-materials for a creative coding course in RMIT
+Some materials for a creative coding course in RMIT
+Use these at your own risk!
