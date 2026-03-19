@@ -5,7 +5,7 @@ Some materials for a creative coding course in RMIT. All sketches can be played 
 ## Course Schedule
 
 ### Week 1: Hello World
-*(Coming soon)*
+*(In class activities and discussion - no sketches)*
 
 ### Week 2: Shape Shifters
 *Interactive primitive shapes, colors, and math logic.*
