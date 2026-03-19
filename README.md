@@ -24,5 +24,23 @@ Some materials for a creative coding course in RMIT. All sketches can be played 
 ### Week 4: Macro-typography 
 *(Paragraphs, pages, and an intro to the use of classes)*
 
-### Week 5-10
-*Syllabus TBC*
+### Week 5: Images
+*(Coming soon)*
+
+### Week 6: Randomness and Noise
+*(Coming soon)*
+
+### Week 7: Intro to 3d
+*(Coming soon)*
+
+### Week 8: Advanced 3d
+*(Coming soon)*
+
+### Week 9: Sound and Visuals
+*(Coming soon)*
+
+### Week 10: Print and Video
+*(Coming soon)*
+
+### Weeks 11-13: Project consultation
+*(Coming soon)*
