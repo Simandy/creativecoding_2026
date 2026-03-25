@@ -26,8 +26,15 @@ Some materials for a creative coding course in RMIT. All sketches can be played 
 - [► Play 'Type Paragraph Blocks'](https://simandy.github.io/creativecoding_2026/type_paragraph_blocks/)
 - [► Play 'Type Strings'](https://simandy.github.io/creativecoding_2026/type_strings/)
 - [► Play 'Type Strings Blast'](https://simandy.github.io/creativecoding_2026/type_strings_blast/)
-*This is a good example of using classes to create objects that can move and display themselves.*
+
+---
+
+#### Object Oriented Programming (OOP)
+OOP is a programming paradigm that organizes code into "objects"—self-contained units that combine both data (properties) and behaviors (methods). This allows us to create many independent instances of an object, like these bouncing text strings, each managing its own state and movement.
 - [► Play 'Type Strings Class (OOP)'](https://simandy.github.io/creativecoding_2026/type_strings_class/)
+- [► Play 'Type Strings Class Runaway'](https://simandy.github.io/creativecoding_2026/type_strings_class_runaway/)
+- [► Play 'Type Strings Select Special (BLAST)'](https://simandy.github.io/creativecoding_2026/type_strings_select_special_BLAST/)
+- [► Play 'Type Class: Advanced Steering'](https://simandy.github.io/creativecoding_2026/type_class_adv_steering/)
 
 
 ### Week 5: Images
