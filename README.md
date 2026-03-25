@@ -23,6 +23,12 @@ Some materials for a creative coding course in RMIT. All sketches can be played 
 
 ### Week 4: Macro-typography 
 *(Paragraphs, pages, and an intro to the use of classes)*
+- [► Play 'Type Paragraph Blocks'](https://simandy.github.io/creativecoding_2026/type_paragraph_blocks/)
+- [► Play 'Type Strings'](https://simandy.github.io/creativecoding_2026/type_strings/)
+- [► Play 'Type Strings Blast'](https://simandy.github.io/creativecoding_2026/type_strings_blast/)
+*This is a good example of using classes to create objects that can move and display themselves.*
+- [► Play 'Type Strings Class (OOP)'](https://simandy.github.io/creativecoding_2026/type_strings_class/)
+
 
 ### Week 5: Images
 *(Coming soon)*
