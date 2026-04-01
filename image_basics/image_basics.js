@@ -13,7 +13,7 @@ let smallImage;
 function preload() {
   //load BEFORE the sketch, cause it may slow us down otherwise
   //bodyFont = loadFont("data/myfontname.otf");        //change to reflect YOUR font
-  bgImage = loadImage("data/_DSC8113_sketch_CC.jpg");  //change this to reflect YOUR image
+  bgImage = loadImage("data/DSC8113_sketch_CC.jpg");  //change this to reflect YOUR image
   smallImage = loadImage("data/redCircle.png");        //change to yours
 }
 
