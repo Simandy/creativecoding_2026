@@ -26,8 +26,8 @@ function setup() {
 //draw() runs continuously after setup(), matching your screen's refresh rate
 function draw() {
   // METHOD 1: Cover (fill) the background of the browser
-  // imageMode(CORNER); //use this if you need other modes elsewhere
-  // image(bgImage, 0, 0, width, height, 0, 0, bgImage.width, bgImage.height, COVER);
+  imageMode(CORNER); //use this if you need other modes elsewhere
+  image(bgImage, 0, 0, width, height, 0, 0, bgImage.width, bgImage.height, COVER);
 
   // METHOD 2: Contain (letterbox) the image to fit as much as possible
   // background(0); // Important! Clears the screen under the image
