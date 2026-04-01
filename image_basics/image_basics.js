@@ -5,6 +5,9 @@
  * This sketch demonstrates ways to load and display images, 
  * Introducing the COVER and CONTAIN modes, and positioning images.
  * See the p5.js reference for more information.
+ * 
+ * Main credit: image used is of an artwork by Karen ann Donnachie
+ * https://karenandy.com/
  */
 
 let bgImage;
