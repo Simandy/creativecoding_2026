@@ -40,8 +40,7 @@ OOP is a programming paradigm that organizes code into "objects"—self-containe
 ### Week 5: Images
 *Loading, scaling, and manipulating images and live webcam feeds.*
 - [► Play 'Image Basics'](https://simandy.github.io/creativecoding_2026/image_basics/)
-- [► Play 'Image Collage (Arrays)'](https://simandy.github.io/creativecoding_2026/image_collage_arrays/)
-* actually, this one is probably too tricky for most of you; i'll upload another, simpler, collage sketch shortly.
+- [► Play 'Image Collage (Arrays)'](https://simandy.github.io/creativecoding_2026/image_collage_arrays/) *actually, this one is probably too tricky at this stage; i'll upload another, simpler, collage sketch shortly...*
 - [► Play 'Image Webcam'](https://simandy.github.io/creativecoding_2026/image_webcam/)
 
 ### Week 6: Randomness and Noise
