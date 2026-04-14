@@ -44,7 +44,10 @@ OOP is a programming paradigm that organizes code into "objects"—self-containe
 - [► Play 'Image Webcam'](https://simandy.github.io/creativecoding_2026/image_webcam/)
 
 ### Week 6: Randomness and Noise
-*(Coming soon)*
+*Random values, interactive systems, and glitch-inspired experiments.*
+- [► Play 'Random Stars'](https://simandy.github.io/creativecoding_2026/random_stars/)
+- [► Play 'Random Lines Interactive'](https://simandy.github.io/creativecoding_2026/random_lines_interactive/)
+- [► Play 'Glitch TV'](https://simandy.github.io/creativecoding_2026/glitch_TV/)
 
 ### Week 7: Intro to 3d
 *(Coming soon)*
