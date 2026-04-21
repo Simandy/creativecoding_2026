@@ -28,7 +28,7 @@ function draw() {
         let x = random(width); // Random x position across the canvas
         let y = random(height); // Random y position across the canvas
         let r = random(0.2, 6); // Random radius for the star, smaller values for more distant stars
-        let hue = random(360); // Random hue for color variation
+        let hue = random(360); // Random hue for color variation (used for our HSB)
         
         fill(hue, 80, 90); // Set fill color with random hue and some saturation and brightness
         noStroke(); // No outline for the stars
