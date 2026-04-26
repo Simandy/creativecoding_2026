@@ -50,7 +50,7 @@ OOP is a programming paradigm that organizes code into "objects"—self-containe
 - [► Play 'Glitch TV'](https://simandy.github.io/creativecoding_2026/glitch_TV/)
 
 ### Week 7: Intro to 3d and Sound
-*Core 3D forms, transforms, and scene basics in WEBGL.*
+*Core 3D forms, transforms, and scene basics in WEBGL. If you're feeling confused workingd in 3d try this [excellent tutorial](https://p5js.org/tutorials/coordinates-and-transformations/)*
 - [► Play 'Sketch 3D Worlds 01'](https://simandy.github.io/creativecoding_2026/sketch_3d_worlds_01/)
 
 *Intro to p5.sound basics.*
