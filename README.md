@@ -49,14 +49,16 @@ OOP is a programming paradigm that organizes code into "objects"—self-containe
 - [► Play 'Random Lines Interactive'](https://simandy.github.io/creativecoding_2026/random_lines_interactive/)
 - [► Play 'Glitch TV'](https://simandy.github.io/creativecoding_2026/glitch_TV/)
 
-### Week 7: Intro to 3d
+### Week 7: Intro to 3d and Sound
+*Core 3D forms, transforms, and scene basics in WEBGL.*
+- [► Play 'Sketch 3D Worlds 01'](https://simandy.github.io/creativecoding_2026/sketch_3d_worlds_01/)
+
+### Week 8: Advanced Sound (working with MP3 and FX)
 *(Coming soon)*
 
-### Week 8: Advanced 3d
-*(Coming soon)*
-
-### Week 9: Sound and Visuals
-*(Coming soon)*
+### Week 9: Preparing to submit Assignment 2
+*Audio-reactive experiments and p5.sound basics.*
+- [► Play 'Sound Intro'](https://simandy.github.io/creativecoding_2026/sound_intro/)
 
 ### Week 10: Print and Video
 *(Coming soon)*
