@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
+  <script language="javascript" type="text/javascript" src="libraries/p5.min.js"></script>
+  <script language="javascript" type="text/javascript" src="libraries/p5.sound.min.js"></script>
+  <script language="javascript" type="text/javascript" src="sound_tools.js"></script>
+  <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=VT323&display=swap');
+
+    :root {
+      --bg: #0e0823;
+      --panel: #1b1338;
+      --ink: #f7f4ff;
+      --muted: #bdaee6;
+      --line: #43346d;
+      --accent: #ff4fd8;
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: linear-gradient(140deg, #140b2f 0%, #21124a 45%, #2a1256 100%);
+    }
+
+    body.boring-mode {
+      --bg: #f3f3f3;
+      --panel: #ffffff;
+      --ink: #222222;
+      --muted: #666666;
+      --line: #d2d2d2;
+      --accent: #3f6fc5;
+      background: linear-gradient(140deg, #f7f7f7 0%, #ececec 100%);
+    }
+
+    body.boring-mode .panel {
+      box-shadow: none;
+    }
+
+    body.boring-mode h1 {
+      font-family: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 24px;
+      color: #222;
+    }
+
+    body.boring-mode h2 {
+      color: #444;
+    }
+
+    body.boring-mode p,
+    body.boring-mode .meta,
+    body.boring-mode .status,
+    body.boring-mode label,
+    body.boring-mode span,
+    body.boring-mode strong {
+      color: #2a2a2a;
+    }
+
+    body.boring-mode #canvas-container {
+      background: #ffffff;
+    }
+
+    body.boring-mode .tool-button,
+    body.boring-mode .snippet-link,
+    body.boring-mode .upload-input,
+    body.boring-mode .close-btn {
+      background: #ffffff;
+      color: #1f1f1f;
+      border-color: #cfcfcf;
+    }
+
+    body.boring-mode .tool-button.active,
+    body.boring-mode .tool-button.playing {
+      background: #3f6fc5;
+      border-color: #3f6fc5;
+      color: #ffffff;
+    }
+
+    body.boring-mode .modal-card {
+      background: #ffffff;
+      color: #222;
+    }
+
+    body.boring-mode pre {
+      background: #f3f3f3;
+      color: #1f1f1f;
+      border-color: #d0d0d0;
+    }
+
+    .shell {
+      display: grid;
+      grid-template-columns: 300px 1fr 280px;
+      gap: 14px;
+      padding: 20px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: 0 0 18px rgba(255, 79, 216, 0.12);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-family: "VT323", monospace;
+      font-size: 38px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: #7fffd4;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #ff9df0;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.45;
+      font-size: 14px;
+    }
+
+    .tool-button {
+      border: 1px solid var(--line);
+      background: #25184a;
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .theme-toggle {
+      margin-top: 10px;
+    }
+
+    .tool-button:hover {
+      border-color: var(--accent);
+    }
+
+    .tool-button.active,
+    .tool-button.playing {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #1b1338;
+    }
+
+    .grid-two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .block {
+      margin-top: 12px;
+      display: grid;
+      gap: 8px;
+    }
+
+    #canvas-container {
+      background: #130c2d;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      min-height: 620px;
+      overflow: hidden;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 56px 1fr 46px;
+      align-items: center;
+      gap: 8px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    .meta {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .meta li {
+      margin-bottom: 8px;
+    }
+
+    .meta a {
+      color: #9ff7f0;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(159, 247, 240, 0.45);
+    }
+
+    .meta a:hover {
+      color: #ffffff;
+      border-bottom-color: rgba(255, 255, 255, 0.85);
+    }
+
+    body.boring-mode .meta a {
+      color: #1f4f9e;
+      border-bottom-color: rgba(31, 79, 158, 0.45);
+    }
+
+    body.boring-mode .meta a:hover {
+      color: #0f3269;
+      border-bottom-color: rgba(15, 50, 105, 0.7);
+    }
+
+    .snippet-link {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #241847;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: var(--ink);
+    }
+
+    .snippet-link:hover {
+      border-color: var(--accent);
+    }
+
+    .upload-input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #241847;
+      padding: 8px;
+      font-size: 12px;
+      color: var(--ink);
+    }
+
+    .status {
+      font-size: 12px;
+      color: var(--muted);
+      word-break: break-word;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 100;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(820px, 100%);
+      max-height: 80vh;
+      overflow: auto;
+      background: #1d153d;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .close-btn {
+      border: 1px solid var(--line);
+      background: #241847;
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    pre {
+      margin: 0;
+      padding: 12px;
+      background: #130d2f;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-family: Menlo, Monaco, "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      color: #9ff7f0;
+    }
+
+    @media (max-width: 1100px) {
+      .shell { grid-template-columns: 1fr; }
+      #canvas-container { min-height: 520px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <aside class="panel">
+      <h1>Sound Tools</h1>
+      <p>Run sound in the middle, keep notes and examples compact.</p>
+      <button class="tool-button theme-toggle" onclick="toggleThemeMode()" id="themeToggleButton">Theme: <span id="themeModeLabel">Vaporwave</span></button>
+
+      <div class="block">
+        <h2>Oscillator</h2>
+        <div class="grid-two wave-buttons">
+          <button class="tool-button" onclick="playOscillator('sine', event)">Sine</button>
+          <button class="tool-button" onclick="playOscillator('square', event)">Square</button>
+          <button class="tool-button" onclick="playOscillator('sawtooth', event)">Sawtooth</button>
+          <button class="tool-button" onclick="playOscillator('triangle', event)">Triangle</button>
+        </div>
+        <button class="tool-button" onclick="stopSound()">Stop Audio</button>
+      </div>
+
+      <div class="block">
+        <h2>Analysis</h2>
+        <div class="grid-two analysis-controls">
+          <button class="tool-button active" onclick="setAnalysisMode('amplitude', event)">Amplitude</button>
+          <button class="tool-button" onclick="setAnalysisMode('frequency', event)">Frequency</button>
+          <button class="tool-button" onclick="setAnalysisMode('waveform', event)">Waveform</button>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Mix</h2>
+        <p class="status" id="sourceStatus">Active Source: Idle</p>
+        <div class="row">
+          <label for="volumeSlider">Vol</label>
+          <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.5" oninput="updateVolume(this.value)">
+          <span id="volumeValue">0.5</span>
+        </div>
+        <div class="row">
+          <label for="panSlider">Pan</label>
+          <input type="range" id="panSlider" min="-1" max="1" step="0.1" value="0" oninput="updatePan(this.value)">
+          <span id="panValue">0</span>
+        </div>
+      </div>
+
+      <div class="block">
+        <h2>Upload Audio</h2>
+        <input class="upload-input" type="file" accept="audio/*" onchange="handleSoundUpload(event)">
+        <div class="grid-two">
+          <button class="tool-button" onclick="playUploadedSound()">Play File</button>
+          <button class="tool-button" onclick="pauseUploadedSound()">Pause</button>
+        </div>
+        <button class="tool-button" onclick="stopUploadedSound()">Stop File</button>
+        <p class="status" id="uploadStatus">No file loaded</p>
+      </div>
+    </aside>
+
+    <section class="panel">
+      <div id="canvas-container"></div>
+    </section>
+
+    <aside class="panel">
+      <section>
+        <h2>Key Points</h2>
+        <ul class="meta">
+          <li>Audio requires user gesture to unlock context.</li>
+          <li>Use FFT bands for responsive visual mapping.</li>
+          <li>Volume range is 0 to 1, pan range is -1 to 1.</li>
+          <li>Sine is smooth, square and sawtooth are brighter.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Code Snippets</h2>
+        <button class="snippet-link" onclick="openCode('setup', 'Audio Setup')">Audio Setup</button>
+        <button class="snippet-link" onclick="openCode('osc', 'Oscillator Playback')">Oscillator Playback</button>
+        <button class="snippet-link" onclick="openCode('fft', 'FFT Analysis')">FFT Analysis</button>
+        <button class="snippet-link" onclick="openCode('mix', 'Volume and Pan')">Volume and Pan</button>
+      </section>
+
+      <section>
+        <h2>Advanced Resources</h2>
+        <ul class="meta">
+          <li><a href="https://p5js.org/reference/p5.sound/" target="_blank" rel="noopener noreferrer">p5.sound Reference</a></li>
+          <li><a href="https://en.wikipedia.org/wiki/Fast_Fourier_transform" target="_blank" rel="noopener noreferrer">Fast Fourier Transform (Wikipedia)</a></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API" target="_blank" rel="noopener noreferrer">Web Audio API (MDN)</a></li>
+        </ul>
+      </section>
+
+    </aside>
+  </main>
+
+  <div id="codeModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <strong id="modalTitle">Snippet</strong>
+        <button class="close-btn" onclick="closeCode()">Close</button>
+      </div>
+      <pre id="modalCode"></pre>
+    </div>
+  </div>
+
+  <script>
+    function applyThemeMode(mode) {
+      const isBoring = mode === 'boring';
+      document.body.classList.toggle('boring-mode', isBoring);
+      const label = document.getElementById('themeModeLabel');
+      if (label) label.textContent = isBoring ? 'Boringas' : 'Vaporwave';
+      localStorage.setItem('toolsThemeMode', isBoring ? 'boring' : 'vaporwave');
+    }
+
+    function toggleThemeMode() {
+      const nextMode = document.body.classList.contains('boring-mode') ? 'vaporwave' : 'boring';
+      applyThemeMode(nextMode);
+    }
+
+    applyThemeMode(localStorage.getItem('toolsThemeMode') || 'vaporwave');
+
+    const snippets = {
+      setup: `function setup() {
+  createCanvas(800, 400);
+  fft = new p5.FFT();
+  osc = new p5.Oscillator('sine');
+  osc.amp(0);
+}`,
+      osc: `function playOscillator(type) {
+  userStartAudio().then(() => {
+    osc.setType(type);
+    osc.start();
+    osc.amp(0.5, 0.1);
+  });
+}
+
+function stopSound() {
+  osc.amp(0, 0.1);
+  setTimeout(() => osc.stop(), 150);
+}`,
+      fft: `let spectrum = fft.analyze();
+let waveform = fft.waveform();
+
+let bass = fft.getEnergy('bass');
+let mid = fft.getEnergy('mid');
+let high = fft.getEnergy('treble');`,
+      mix: `function updateVolume(v) {
+  osc.amp(parseFloat(v), 0.05);
+}
+
+function updatePan(v) {
+  osc.pan(parseFloat(v), 0.05);
+}`
+    };
+
+    function openCode(id, title) {
+      const modal = document.getElementById('codeModal');
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalCode').textContent = snippets[id] || '';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeCode() {
+      const modal = document.getElementById('codeModal');
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    document.getElementById('codeModal').addEventListener('click', (evt) => {
+      if (evt.target.id === 'codeModal') closeCode();
+    });
+  </script>
+</body>
+</html>

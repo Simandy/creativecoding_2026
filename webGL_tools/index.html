@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- PLEASE NO CHANGES BELOW THIS LINE (UNTIL I SAY SO) -->
+  <script language="javascript" type="text/javascript" src="libraries/p5.min.js"></script>
+  <script language="javascript" type="text/javascript" src="webGL_tools.js"></script>
+  <!-- OK, YOU CAN MAKE CHANGES BELOW THIS LINE AGAIN -->
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600&family=VT323&family=IBM+Plex+Mono:wght@400;600&display=swap');
+
+    :root {
+      --bg: #0d0824;
+      --panel: #1a123a;
+      --ink: #f7f4ff;
+      --muted: #baa9e8;
+      --line: #4a3a75;
+      --accent: #74f9ff;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(circle at top left, #311c66 0%, #1a123a 40%, #0d0824 100%);
+    }
+
+    body.boring-mode {
+      --bg: #f3f3f3;
+      --panel: #ffffff;
+      --ink: #222222;
+      --muted: #666666;
+      --line: #d2d2d2;
+      --accent: #3f6fc5;
+      background: radial-gradient(circle at top left, #ffffff 0%, #ededed 100%);
+    }
+
+    body.boring-mode .panel {
+      box-shadow: none;
+    }
+
+    body.boring-mode h1 {
+      font-family: "Space Grotesk", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 24px;
+      color: #222;
+    }
+
+    body.boring-mode h2 {
+      color: #444;
+    }
+
+    body.boring-mode p,
+    body.boring-mode .topic-list,
+    body.boring-mode strong {
+      color: #2a2a2a;
+    }
+
+    body.boring-mode #canvas-container {
+      background: #ffffff;
+    }
+
+    body.boring-mode .tool-button,
+    body.boring-mode .snippet-link,
+    body.boring-mode .close-btn {
+      background: #ffffff;
+      color: #1f1f1f;
+      border-color: #cfcfcf;
+    }
+
+    body.boring-mode .tool-button.active {
+      background: #3f6fc5;
+      border-color: #3f6fc5;
+      color: #ffffff;
+    }
+
+    body.boring-mode .modal-card {
+      background: #ffffff;
+      color: #222;
+    }
+
+    body.boring-mode pre {
+      background: #f3f3f3;
+      color: #1f1f1f;
+      border-color: #d0d0d0;
+    }
+
+    .shell {
+      padding: 20px;
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 280px 1fr 280px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: 0 0 18px rgba(116, 249, 255, 0.14);
+    }
+
+    h1 {
+      margin: 0 0 6px;
+      font-family: "VT323", monospace;
+      font-size: 38px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      color: #ff83e7;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: #74f9ff;
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.45;
+      color: #efe8ff;
+      font-size: 14px;
+    }
+
+    .stage {
+      display: grid;
+      gap: 12px;
+    }
+
+    #canvas-container {
+      background: #130b2f;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      min-height: 620px;
+      padding: 10px;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.02);
+    }
+
+    .toolbar {
+      display: grid;
+      gap: 10px;
+    }
+
+    .control-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .tool-button {
+      border: 1px solid var(--line);
+      background: #27194f;
+      color: var(--ink);
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+
+    .theme-toggle {
+      margin-top: 10px;
+    }
+
+    .tool-button:hover {
+      border-color: var(--accent);
+    }
+
+    .tool-button.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #1a123a;
+    }
+
+    .topic-list {
+      margin: 0;
+      padding-left: 18px;
+      font-size: 13px;
+      line-height: 1.5;
+      color: #efe8ff;
+    }
+
+    .topic-list li {
+      margin-bottom: 8px;
+    }
+
+    .snippet-links {
+      display: grid;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .snippet-link {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #27194f;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--ink);
+    }
+
+    .snippet-link:hover {
+      border-color: var(--accent);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(18, 18, 18, 0.45);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 100;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-card {
+      width: min(800px, 100%);
+      max-height: 80vh;
+      overflow: auto;
+      background: #1a123a;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      padding: 16px;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .close-btn {
+      border: 1px solid var(--line);
+      background: #27194f;
+      border-radius: 8px;
+      padding: 6px 10px;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    pre {
+      margin: 0;
+      padding: 12px;
+      background: #120b2d;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-family: "IBM Plex Mono", Menlo, Monaco, "Courier New", monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      color: #74f9ff;
+    }
+
+    @media (max-width: 1100px) {
+      .shell {
+        grid-template-columns: 1fr;
+      }
+
+      #canvas-container {
+        min-height: 520px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="shell">
+    <aside class="panel toolbar">
+      <section>
+        <h1>WEBGL Tools</h1>
+        <p>Core interaction in the center, concise notes at the edges.</p>
+        <button class="tool-button theme-toggle" onclick="toggleThemeMode()" id="themeToggleButton">Theme: <span id="themeModeLabel">Vaporwave</span></button>
+      </section>
+
+      <section>
+        <h2>Shape</h2>
+        <div class="control-group shape-controls">
+          <button class="tool-button active" onclick="setShape('box', event)">Box</button>
+          <button class="tool-button" onclick="setShape('sphere', event)">Sphere</button>
+          <button class="tool-button" onclick="setShape('cylinder', event)">Cylinder</button>
+          <button class="tool-button" onclick="setShape('cone', event)">Cone</button>
+          <button class="tool-button" onclick="setShape('torus', event)">Torus</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Lighting</h2>
+        <div class="control-group light-controls">
+          <button class="tool-button active" onclick="setLighting('ambient', event)">Ambient</button>
+          <button class="tool-button" onclick="setLighting('directional', event)">Directional</button>
+          <button class="tool-button" onclick="setLighting('point', event)">Point</button>
+          <button class="tool-button" onclick="setLighting('spot', event)">Spot</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Camera</h2>
+        <div class="control-group camera-controls">
+          <button class="tool-button active" onclick="setCameraMode('default', event)">Default</button>
+          <button class="tool-button" onclick="setCameraMode('orbit', event)">Orbit</button>
+          <button class="tool-button" onclick="setCameraMode('top', event)">Top</button>
+          <button class="tool-button" onclick="setCameraMode('side', event)">Side</button>
+        </div>
+      </section>
+
+      <section>
+        <h2>Outlines</h2>
+        <div class="control-group outline-controls">
+          <button class="tool-button active" onclick="setOutlineMode(false, event)">Off</button>
+          <button class="tool-button" onclick="setOutlineMode(true, event)">On</button>
+        </div>
+      </section>
+    </aside>
+
+    <section class="stage">
+      <div id="canvas-container"></div>
+      <div class="panel">
+        <h2>Quick Summary</h2>
+        <p>Use WEBGL mode for 3D primitives, then combine transform, light, and camera for depth. Push/pop keeps each object isolated.</p>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <section>
+        <h2>Key Points</h2>
+        <ul class="topic-list">
+          <li>In WEBGL, origin is the canvas center.</li>
+          <li>Axes: X right, Y down, Z toward viewer.</li>
+          <li>Transform order changes final result.</li>
+          <li>Lighting type strongly affects form readability.</li>
+          <li>Use push/pop for clean multi-object scenes.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Code Snippets</h2>
+        <div class="snippet-links">
+          <button class="snippet-link" onclick="openCode('setup', 'Basic WEBGL Setup')">Basic WEBGL Setup</button>
+          <button class="snippet-link" onclick="openCode('primitives', '3D Primitive Shapes')">3D Primitive Shapes</button>
+          <button class="snippet-link" onclick="openCode('lights', 'Lighting Presets')">Lighting Presets</button>
+          <button class="snippet-link" onclick="openCode('camera', 'Orbit Camera')">Orbit Camera</button>
+          <button class="snippet-link" onclick="openCode('axes', 'Axis Guide')">Axis Guide</button>
+        </div>
+      </section>
+    </aside>
+  </main>
+
+  <div id="codeModal" class="modal" aria-hidden="true">
+    <div class="modal-card">
+      <div class="modal-head">
+        <strong id="modalTitle">Snippet</strong>
+        <button class="close-btn" onclick="closeCode()">Close</button>
+      </div>
+      <pre id="modalCode"></pre>
+    </div>
+  </div>
+
+  <script>
+    function applyThemeMode(mode) {
+      const isBoring = mode === 'boring';
+      document.body.classList.toggle('boring-mode', isBoring);
+      const label = document.getElementById('themeModeLabel');
+      if (label) label.textContent = isBoring ? 'Boringas' : 'Vaporwave';
+      localStorage.setItem('toolsThemeMode', isBoring ? 'boring' : 'vaporwave');
+    }
+
+    function toggleThemeMode() {
+      const nextMode = document.body.classList.contains('boring-mode') ? 'vaporwave' : 'boring';
+      applyThemeMode(nextMode);
+    }
+
+    applyThemeMode(localStorage.getItem('toolsThemeMode') || 'vaporwave');
+
+    const snippets = {
+      setup: `function setup() {
+  createCanvas(800, 600, WEBGL);
+}
+
+function draw() {
+  background(220);
+}`,
+      primitives: `box(100, 100, 100);
+sphere(60);
+cylinder(50, 100);
+cone(50, 100);
+torus(50, 20);`,
+      lights: `ambientLight(200);
+directionalLight(255, 255, 255, 0, 1, -1);
+pointLight(255, 100, 100, 200, 200, 200);
+spotLight(255, 255, 255, 0, -100, 300, 0, 0, -1, PI / 4);`,
+      camera: `let angle = frameCount * 0.01;
+let x = cos(angle) * 300;
+let z = sin(angle) * 300;
+camera(x, 100, z, 0, 0, 0, 0, 1, 0);`,
+      axes: `stroke(255, 0, 0);
+line(0, 0, 0, 120, 0, 0);
+
+stroke(0, 255, 0);
+line(0, 0, 0, 0, 120, 0);
+
+stroke(0, 0, 255);
+line(0, 0, 0, 0, 0, 120);`
+    };
+
+    function openCode(id, title) {
+      const modal = document.getElementById('codeModal');
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalCode').textContent = snippets[id] || '';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeCode() {
+      const modal = document.getElementById('codeModal');
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+    }
+
+    document.getElementById('codeModal').addEventListener('click', (evt) => {
+      if (evt.target.id === 'codeModal') {
+        closeCode();
+      }
+    });
+  </script>
+</body>
+</html>
