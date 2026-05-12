@@ -62,11 +62,14 @@ OOP is a programming paradigm that organizes code into "objects"—self-containe
 - [► Play 'Sound: Mic Activate'](https://simandy.github.io/creativecoding_2026/sound_mic_activate/)
 - [► Play 'Sound: Pseudo MIDI'](https://simandy.github.io/creativecoding_2026/sound_pseudo_MIDI/)
 
-### Week 9: Preparing to submit Assignment 2
-*(Coming soon)*
+### Week 9: Summary of p5 tools
+*A compact summary toolkit for typography, sound, and WEBGL.*
+- [► Play 'Type Tools'](../drafts/type_tools/index.html)
+- [► Play 'Sound Tools'](../drafts/sound_tools/index.html)
+- [► Play 'WEBGL Tools'](../drafts/webGL_tools/index.html)
 
-### Week 10: Print and Video
-*(Coming soon)*
+### Week 10: Preparing to submit Assignment 2
+*No new sketches this week*
 
 ### Weeks 11-13: Project consultation
 *(Coming soon)*
