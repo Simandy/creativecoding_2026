@@ -69,7 +69,8 @@ OOP is a programming paradigm that organizes code into "objects"—self-containe
 - [► Play 'WEBGL Tools'](https://simandy.github.io/creativecoding_2026/webGL_tools/)
 
 ### Week 10: Preparing to submit Assignment 2
-*How to blend sketches and output images and animations and win meme cats*
+*No sketches this week*
 
 ### Weeks 11-13: Project consultation
-*(Coming soon)*
+*How to blend sketches and output images and animations and win meme cats*
+- [► Play 'Blending Sketches'](https://simandy.github.io/creativecoding_2026/frankensketch_01/)
