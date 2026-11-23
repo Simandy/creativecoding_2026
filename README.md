@@ -1,6 +1,10 @@
 # Creative Coding 2026
 
-Some materials for a creative coding course in RMIT. All sketches can be played directly in your browser by clicking the links below!
+Some materials for a creative coding course whic happened in RMIT in 2026. All sketches can be played directly in your browser by clicking the links below!
+------------------------------------------------------------------
+IMPORTANT! This is NOT the course which will be delivered for 2027
+... if there's anything you like here, just take it! hugs
+------------------------------------------------------------------
 
 ## Course Schedule
 
